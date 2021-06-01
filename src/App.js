@@ -37,7 +37,7 @@ class App extends Component {
   };
   render() {
     return (
-      <div className="bg-dark" style={{ height: "100vh" }}>
+      <div className="bg-dark">
         <Navbar />
         <div className="container">
           <MainThree result={this.state.result} date={this.state.date} />

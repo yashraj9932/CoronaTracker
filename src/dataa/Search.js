@@ -13,7 +13,7 @@ const Search = (props) => {
 
   return (
     <div>
-      <form onSubmit={onSubmit} className="form" style={{ marginTop: "4%" }}>
+      <form onSubmit={onSubmit} className="form" style={{ marginTop: "3%" }}>
         <input
           type="text"
           name="text"

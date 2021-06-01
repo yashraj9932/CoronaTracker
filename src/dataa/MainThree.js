@@ -6,15 +6,7 @@ const MainThree = ({ result, date }) => {
   return (
     <Fragment>
       <h2 style={{ color: "#6EACE8" }}>Worldwide statistics:</h2>
-
-      <div
-        style={{
-          margin: "2% auto",
-          display: "grid",
-          gridTemplateColumns: "repeat(3,1fr)",
-          gridGap: "1rem",
-        }}
-      >
+      <div className="row">
         {result &&
           result.map((det) => {
             return <Detail key={det.value} text={det.text} value={det.value} />;
