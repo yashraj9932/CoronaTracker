@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import CtContext from "../context/ctContext";
 
-const Search = (props) => {
+const Search = () => {
+  const ctContext = useContext(CtContext);
+  const { searchData } = ctContext;
+
   const [text, setText] = useState("");
   const onChange = (e) => setText(e.target.value);
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    props.searchData(text);
+    searchData(text);
     setText("");
   };
 

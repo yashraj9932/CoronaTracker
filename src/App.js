@@ -1,52 +1,43 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import MainThree from "./dataa/MainThree";
 import Search from "./dataa/Search";
 import Navbar from "./layout/Navbar";
 import axios from "axios";
 import Display from "./dataa/Display";
+import CtState from "./context/CtState";
 
-class App extends Component {
-  state = {
-    result: null,
-    date: null,
-    country: null,
-  };
-  async componentDidMount() {
-    const res = await axios.get(`https://covid19.mathdro.id/api`);
-    const { confirmed, recovered, deaths, lastUpdate } = res.data;
-    confirmed.text = "Confirmed";
-    recovered.text = "Recovered";
-    deaths.text = "Deaths";
-    var ress = [confirmed, recovered, deaths];
-    this.setState({ result: ress });
-    this.setState({ date: lastUpdate });
-  }
+const App = () => {
+  const [result, setResult] = useState(null);
+  const [date, setDate] = useState(null);
 
-  searchData = async (text) => {
-    const res = await axios.get(
-      `https://covid19.mathdro.id/api/countries/${text}`
-    );
-    const { confirmed, recovered, deaths } = res.data;
-    confirmed.text = "Confirmed";
-    recovered.text = "Recovered";
-    deaths.text = "Deaths";
-    var ress = [confirmed, recovered, deaths];
-    console.log(ress);
-    this.setState({ country: ress });
-  };
-  render() {
-    return (
+  useEffect(() => {
+    const fetchdata = async () => {
+      const res = await axios.get(`https://covid19.mathdro.id/api`);
+      const { confirmed, recovered, deaths, lastUpdate } = res.data;
+      confirmed.text = "Confirmed";
+      recovered.text = "Recovered";
+      deaths.text = "Deaths";
+      var ress = [confirmed, recovered, deaths];
+      setResult(ress);
+      setDate(lastUpdate);
+    };
+    fetchdata();
+    //eslint-disable-next-line
+  }, []);
+
+  return (
+    <CtState>
       <div className="bg-dark">
         <Navbar />
         <div className="container">
-          <MainThree result={this.state.result} date={this.state.date} />
-          <Search searchData={this.searchData} />
-          <Display country={this.state.country} />
+          <MainThree result={result} date={date} />
+          <Search />
+          <Display />
         </div>
       </div>
-    );
-  }
-}
+    </CtState>
+  );
+};
 
 export default App;
